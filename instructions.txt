@@ -1,0 +1,13 @@
+nodejs ^18
+nvm (optional)
+backend_sanity(folder) > npm install -g @sanity/cli
+sanity init --coupon javascriptmastery2022
+
+
+│  You're running Sanity Studio v3. In this version the     │
+│  [start] command is used to preview static builds.        |
+│                                                           │
+│  To run a development server, use the [npm run dev] or    |
+│  [npx sanity dev] command instead. For more information,  │
+│  see https://www.sanity.io/help/studio-v2-vs-v3           │
+│                                                    
