@@ -10,4 +10,10 @@ sanity init --coupon javascriptmastery2022
 │  To run a development server, use the [npm run dev] or    |
 │  [npx sanity dev] command instead. For more information,  │
 │  see https://www.sanity.io/help/studio-v2-vs-v3           │
-│                                                    
+
+frontend_react modules
+    - @sanity/client
+    - @sanity/image-url
+    - framer-motion
+    - node-sass
+    - react-icons
