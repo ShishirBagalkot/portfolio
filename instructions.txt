@@ -17,3 +17,5 @@ frontend_react modules
     - framer-motion
     - node-sass
     - react-icons
+
+BEM Methodology: class__name (double underscore)
