@@ -6,11 +6,7 @@ function Footer() {
       <p>
         &copy; 2024 Shishir Bagalkot
         <br />
-        All content is created with 
-        <br />
-        love, caffeine, and possibly 
-        <br />
-        a dash of procrastination.
+        All content is created with love, caffeine, and possibly a dash of procrastination.
       </p>
     </section>
   );

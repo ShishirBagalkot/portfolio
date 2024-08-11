@@ -5,3 +5,12 @@
     color: var(--footer-text-color);
   }
 }
+
+@media (width >= 800px) {
+  .container {
+    p {
+      font-size: 19px;
+      color: var(--footer-text-color);
+    }
+  }
+}
