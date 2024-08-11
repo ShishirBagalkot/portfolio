@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .description {
+    display: flex;
+    max-width: 900px;
+    align-self: center;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}

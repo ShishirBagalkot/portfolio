@@ -39,9 +39,6 @@ function Home() {
                 <img src={linkedInIcon} alt="Linkedin Icon" />
             </a>
         </span>
-        <p className={styles.description}>
-            Full Stack Developer with 2 years' experience in REST APIs, Java, Spring Boot, Cassandra, and PostgreSQL. Skilled in Angular, HTML, CSS, TDD (Junit), and secure coding with SonarQube. Proficient in Agile (Scrum) and DevOps tools (Jenkins, Spinnaker). Strong communicator with excellent time management and problem-solving abilities.
-        </p>
         <a href="https://drive.google.com/file/d/1TGZBYF7YHKFAKH5_aOPczBUWLcYkwZ45/view?usp=drive_link" target="_blank">
             <button className="hover">
                 Resume
