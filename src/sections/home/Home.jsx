@@ -45,7 +45,7 @@ function Home() {
           </a>
         </span>
         <a
-          href="https://drive.google.com/file/d/1Cfo7Wh0bsbcbuGnYzQkRBw4hOwjXUrRJ/view?usp=sharing"
+          href="https://drive.google.com/file/d/1RNvipzNjlgL5ERt8VMpGAZ-CE4iiqj_Z/view?usp=sharing"
           target="_blank"
         >
           <button className="hover">Resume</button>
