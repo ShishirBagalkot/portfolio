@@ -1,13 +1,13 @@
-import styles from "./HomeStyles.module.css";
-import profilePic from "../assets/hero-img.png";
-import lightThemeIcon from "../assets/sun.svg";
-import darkThemeIcon from "../assets/moon.svg";
-import lightTwitterIcon from "../assets/twitter-light.svg"
-import darkTwitterIcon from "../assets/twitter-dark.svg"
-import lightGitHubIcon from "../assets/github-light.svg"
-import darkGitHubIcon from "../assets/github-dark.svg"
-import lightLinkedInIcon from "../assets/linkedin-light.svg"
-import darkLinkedInIcon from "../assets/linkedin-dark.svg"
+import styles from "../home/HomeStyles.module.css"
+import profilePic from "../../assets/hero-img.png";
+import lightThemeIcon from "../../assets/sun.svg";
+import darkThemeIcon from "../../assets/moon.svg";
+import lightTwitterIcon from "../../assets/twitter-light.svg"
+import darkTwitterIcon from "../../assets/twitter-dark.svg"
+import lightGitHubIcon from "../../assets/github-light.svg"
+import darkGitHubIcon from "../../assets/github-dark.svg"
+import lightLinkedInIcon from "../../assets/linkedin-light.svg"
+import darkLinkedInIcon from "../../assets/linkedin-dark.svg"
 import { useTheme } from "../../common/ThemeContext";
 
 function Home() {
