@@ -14,7 +14,7 @@
   }
 }
 
-.skillList {
+.skillsList {
   display: flex;
   justify-content: space-evenly;
   align-self: center;
@@ -31,8 +31,8 @@ hr {
   margin: 30px auto;
 }
 
-/* @media (width >= 800px) {
-  .skillList {
+@media (width >= 800px) {
+  .skillsList {
     max-width: fit-content;
     gap: 30px;
 
@@ -42,6 +42,6 @@ hr {
   }
 
   hr {
-    width: 300px;
+    width: 500px;
   }
-} */
+}

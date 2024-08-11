@@ -68,7 +68,7 @@
 }
 
 .description {
-  max-width: 24ch;
+  max-width: 44ch;
 }
 
 .info {
@@ -78,13 +78,13 @@
   gap: 20px;
 }
 
-/* @media (width >= 800px) {
+@media (width >= 800px) {
   .container {
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-evenly;
 
-    .hero {
+    .home {
       max-width: 350px;
       width: 350px;
     }
@@ -93,9 +93,9 @@
 
 @media (width >= 1400px) {
   .container {
-    .hero {
+    .home {
       max-width: 400px;
       width: 400px;
     }
   }
-} */
+}
