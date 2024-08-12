@@ -1,10 +1,5 @@
-import './App.css'
-import About from './sections/about/About'
-import Contact from './sections/contact/Contact'
-import Footer from './sections/footer/Footer'
-import Home from './sections/home/Home'
-import Projects from './sections/projects/Projects'
-import Skills from './sections/skills/Skills'
+import "./App.css";
+import { About, Contact, Footer, Home, Projects, Skills } from './sections';
 
 function App() {
   return (
@@ -16,7 +11,7 @@ function App() {
       <Contact />
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -2,7 +2,7 @@ import styles from "./ProjectsStyles.module.css";
 import viberr from "../../assets/viberr.png";
 import ProjectsCard from "../../common/ProjectsCard";
 
-function Projects() {
+export const Projects = () => {
   return (
     <section id="projects" className={styles.container}>
       <h1 className="sectionTitle">Projects</h1>

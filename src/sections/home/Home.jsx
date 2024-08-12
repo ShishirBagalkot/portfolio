@@ -10,7 +10,7 @@ import lightLinkedInIcon from "../../assets/linkedin-light.svg";
 import darkLinkedInIcon from "../../assets/linkedin-dark.svg";
 import { useTheme } from "../../common/ThemeContext";
 
-function Home() {
+export const Home = () => {
   const { theme, toggleTheme } = useTheme();
   const themeIcon = theme === "light" ? lightThemeIcon : darkThemeIcon;
   const twitterIcon = theme === "light" ? lightTwitterIcon : darkTwitterIcon;

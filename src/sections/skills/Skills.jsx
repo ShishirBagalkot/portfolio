@@ -18,7 +18,7 @@ import confluenceIcon from "../../assets/confluence.svg";
 import SkillsList from "../../common/SkillsList";
 import { useTheme } from "../../common/ThemeContext";
 
-function Skills() {
+export const Skills = () => {
   const {theme} = useTheme();
   const checkMarkIcon = theme === 'light' ? lightThemeCheckMarkIcon: darkThemeCheckMarkIcon;
 

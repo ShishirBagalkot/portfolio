@@ -1,6 +1,6 @@
 import styles from './AboutStyles.module.css';
 
-function About() {
+export const About = () => {
   return (
     <section id="about" className={styles.container}>
         <h1 className="sectionTitle">About</h1>
