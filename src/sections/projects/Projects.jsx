@@ -1,5 +1,5 @@
 import styles from "./ProjectsStyles.module.css";
-import viberr from "../../assets/viberr.png";
+import codeflux from "../../assets/favicon.png";
 import ProjectsCard from "../../common/ProjectsCard";
 
 export const Projects = () => {
@@ -7,9 +7,9 @@ export const Projects = () => {
     <section id="projects" className={styles.container}>
       <h1 className="sectionTitle">Projects</h1>
       <div className={styles.projectsContainer}>
-        <ProjectsCard imgSrc={viberr} projectLink='' projectTitle='Project 1' projectDesc='Project 1 desc'/>
-        <ProjectsCard imgSrc={viberr} projectLink='' projectTitle='Project 1' projectDesc='Project 1 desc'/>
-        <ProjectsCard imgSrc={viberr} projectLink='' projectTitle='Project 1' projectDesc='Project 1 desc'/>
+        <ProjectsCard imgSrc={codeflux} projectLink='https://code-flux.web.app/explore' projectTitle='Code Flux' projectDesc='Tech blog'/>
+        <ProjectsCard imgSrc={"/"} projectLink='' projectTitle='Project 2' projectDesc='Project 2 desc'/>
+        <ProjectsCard imgSrc={"/"} projectLink='' projectTitle='Project 3' projectDesc='Project 3 desc'/>
       </div>
     </section>
   );
