@@ -1,5 +1,5 @@
 import "./App.css";
-import { About, Contact, Footer, Home, Projects, Skills } from './sections';
+import { About, Footer, Home, Projects, Skills } from './sections';
 
 function App() {
   return (
@@ -8,7 +8,6 @@ function App() {
       <About />
       <Projects />
       <Skills />
-      <Contact />
       <Footer />
     </>
   );

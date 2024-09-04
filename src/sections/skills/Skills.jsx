@@ -42,6 +42,7 @@ export const Skills = () => {
       <hr />
       <div className={styles.skillsList}>
         <SkillsList logoSrc={awsIcon} skillName="AWS" />
+        &nbsp;
         <SkillsList logoSrc={bitBucketIcon} skillName="BitBucket" />
         <SkillsList logoSrc={gitHubIcon} skillName="GitHub" />
       </div>

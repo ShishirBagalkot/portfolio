@@ -8,7 +8,8 @@
   min-height: 500px;
 
   .home {
-    max-width: 200px;
+    max-width: 300px;
+    border-radius: 50%;
   }
 
   span {
@@ -82,8 +83,8 @@
     justify-content: space-evenly;
 
     .home {
-      max-width: 350px;
-      width: 350px;
+      max-width: 250px;
+      width: 250px;
     }
   }
 }
@@ -91,8 +92,8 @@
 @media (width >= 1400px) {
   .container {
     .home {
-      max-width: 400px;
-      width: 400px;
+      max-width: 300px;
+      width: 300px;
     }
   }
 }

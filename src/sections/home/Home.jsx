@@ -1,5 +1,5 @@
 import styles from "../home/HomeStyles.module.css";
-import profilePic from "../../assets/hero-img.png";
+import profilePic from "../../assets/DP.jpg";
 import lightThemeIcon from "../../assets/sun.svg";
 import darkThemeIcon from "../../assets/moon.svg";
 import lightTwitterIcon from "../../assets/twitter-light.svg";
