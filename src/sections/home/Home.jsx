@@ -45,7 +45,7 @@ export const Home = () => {
           </a>
         </span>
         <a
-          href="https://drive.google.com/file/d/1aWDSz5M2PIJtF-H0wehdxu1CQ9jALJbZ/view?usp=sharing"
+          href="https://drive.google.com/file/d/1_RRWJ5Hy0Kx-0B7OS4EvZMbeUcGTpLvP/view?usp=sharing"
           target="_blank"
         >
           <button className="hover">Resume</button>

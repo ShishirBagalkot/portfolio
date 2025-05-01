@@ -5,7 +5,7 @@ export const About = () => {
     <section id="about" className={styles.container}>
         <h1 className="sectionTitle">About</h1>
         <p className={styles.description}>
-            Full Stack Developer with 2 years of experience in REST APIs, Java, Spring Boot, Cassandra, and PostgreSQL. Skilled in Angular, HTML, CSS, TDD (Junit), and secure coding with SonarQube. Proficient in Agile (Scrum) and DevOps tools (Jenkins, Spinnaker). Strong communicator with excellent time management and problem-solving abilities.
+        Full Stack Developer with 2.5+ years of experience in designing REST APIs using Java, Spring Boot, Kafka, Cassandra, PostgreSQL, and Angular. Proficient in TDD (JUnit), secure coding (SonarQube, Veracode), and Agile (Scrum). Experienced with DevOps tools like Jenkins and Spinnaker. Strong communicator with excellent time management and problem-solving skills.
         </p>
     </section>
   )
