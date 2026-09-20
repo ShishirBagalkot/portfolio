@@ -1,0 +1,62 @@
+.cursorLayer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.dot {
+  position: fixed;
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.8);
+  transition: opacity 200ms ease;
+}
+
+.ring {
+  position: fixed;
+  top: -18px;
+  left: -18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-rgb), 0.6);
+  transition: opacity 200ms ease, width 200ms ease, height 200ms ease,
+    top 200ms ease, left 200ms ease, border-color 200ms ease;
+}
+
+.ring::before,
+.ring::after {
+  content: "";
+  position: absolute;
+  background: rgba(var(--accent-rgb), 0.6);
+}
+
+.ring::before {
+  top: 50%;
+  left: -6px;
+  width: 4px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.ring::after {
+  top: -6px;
+  left: 50%;
+  width: 1px;
+  height: 4px;
+  transform: translateX(-50%);
+}
+
+.ringActive {
+  width: 54px;
+  height: 54px;
+  top: -27px;
+  left: -27px;
+  border-color: rgba(var(--accent-2-rgb), 0.85);
+  background: rgba(var(--accent-2-rgb), 0.08);
+}

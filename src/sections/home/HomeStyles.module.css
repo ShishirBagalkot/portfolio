@@ -2,23 +2,30 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   text-align: center;
   height: 100dvh;
   min-height: 500px;
+  position: relative;
 
   .home {
+    display: block;
     max-width: 300px;
+    width: 100%;
     border-radius: 50%;
+    border: 2px solid var(--surface-border);
+    pointer-events: none;
   }
 
-  span {
+  span.socials {
     display: flex;
     gap: 25px;
     justify-content: center;
 
     a {
       margin: 0;
+      display: inline-flex;
 
       img {
         width: 30px;
@@ -40,52 +47,205 @@
     height: 50px;
     font-size: 20px;
     font-weight: bold;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.25);
     transition: box-shadow 200ms ease-in-out, transform 200ms ease-in-out;
   }
 
   button:hover {
-    transform: scale(1.05);
+    box-shadow: 0 6px 28px rgba(var(--accent-rgb), 0.45);
   }
 
   button:active {
     transform: translateY(2px);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
   }
+}
+
+.tiltWrap {
+  border-radius: 50%;
 }
 
 .colorModeContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.radar {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  border: 1px dashed rgba(var(--accent-rgb), 0.35);
+  animation: spin 16s linear infinite;
+  pointer-events: none;
+}
+
+.radar::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border-radius: 50%;
+  border: 1px dotted rgba(var(--accent-2-rgb), 0.3);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .colorMode {
   position: absolute;
   padding-right: 20px;
   right: 0;
+  bottom: 6px;
   width: 25px;
-}
-
-.colorMode:hover {
-  cursor: pointer;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.4));
 }
 
 .info {
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.glitchName {
+  position: relative;
+  display: inline-block;
+}
+
+.glitchName::before,
+.glitchName::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+@media (pointer: fine) {
+  .glitchName:hover::before,
+  .glitchName:hover::after {
+    opacity: 0.8;
+    animation: glitchShift 0.5s steps(2, end) infinite;
+  }
+
+  .glitchName:hover::before {
+    color: var(--accent);
+    clip-path: inset(0 0 55% 0);
+    transform: translate(-2px, -1px);
+  }
+
+  .glitchName:hover::after {
+    color: var(--accent-2);
+    clip-path: inset(45% 0 0 0);
+    transform: translate(2px, 1px);
+  }
+}
+
+@keyframes glitchShift {
+  0% {
+    transform: translate(-2px, -1px);
+  }
+  50% {
+    transform: translate(2px, 1px);
+  }
+  100% {
+    transform: translate(-1px, 2px);
+  }
+}
+
+.role {
+  min-height: 1.4em;
+  color: var(--accent);
+  font-family: "Roboto Mono", monospace;
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 3px;
+  background: var(--accent);
+  vertical-align: -0.15em;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 2px solid var(--surface-border);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.scrollCue span {
+  width: 4px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: scrollCue 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollCue {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0;
+  }
 }
 
 @media (width >= 800px) {
   .container {
     flex-direction: row-reverse;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 60px;
 
     .home {
       max-width: 250px;
       width: 250px;
     }
+
+    .info {
+      flex: 1;
+      min-width: 0;
+      max-width: 520px;
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  .colorModeContainer {
+    flex: 0 0 auto;
   }
 }
 

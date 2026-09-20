@@ -6,6 +6,16 @@
   }
 }
 
+.glyphRule {
+  display: block;
+  font-family: "Roboto Mono", monospace;
+  color: var(--accent);
+  opacity: 0.5;
+  letter-spacing: 8px;
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+
 @media (width >= 800px) {
   .container {
     p {
