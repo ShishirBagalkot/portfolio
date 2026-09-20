@@ -1,5 +1,5 @@
 import "./App.css";
-import { About, Footer, Home, Projects, Skills } from './sections';
+import { Experience, Footer, Home, Projects, Skills } from './sections';
 import GlyphField from './common/GlyphField';
 import Cursor from './common/Cursor';
 import SectionNav from './common/SectionNav';
@@ -11,7 +11,8 @@ function App() {
       <Cursor />
       <SectionNav />
       <Home />
-      <About />
+      {/* About section hidden for now — see src/sections/about */}
+      <Experience />
       <Projects />
       <Skills />
       <Footer />

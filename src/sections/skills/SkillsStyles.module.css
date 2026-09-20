@@ -97,7 +97,7 @@
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   align-items: start;
   gap: 22px;
-  max-width: 1080px;
+  max-width: 1180px;
   width: 100%;
   align-self: center;
   padding: 0 20px;
@@ -158,6 +158,13 @@
   letter-spacing: 0.02em;
 }
 
+.count {
+  margin-left: auto;
+  color: var(--muted-text-color);
+  opacity: 0.6;
+  font-size: 11px;
+}
+
 .chipGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
@@ -180,8 +187,13 @@
   }
 
   img {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
   }
 
   p {
@@ -222,5 +234,20 @@
 
   .chip p {
     font-size: 14px;
+  }
+
+  .wide {
+    grid-column: span 2;
+  }
+
+  .wide .chipGrid {
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  }
+
+  .heading {
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 20px;
+    justify-content: flex-start;
   }
 }

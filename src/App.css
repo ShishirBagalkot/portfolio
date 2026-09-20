@@ -107,6 +107,7 @@ p {
   position: relative;
   display: inline-flex;
   align-items: center;
+  align-self: center;
   gap: 14px;
 }
 

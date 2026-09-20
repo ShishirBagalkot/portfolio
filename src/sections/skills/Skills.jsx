@@ -4,18 +4,37 @@ import styles from "./SkillsStyles.module.css";
 import darkThemeCheckMarkIcon from "../../assets/checkmark-dark.svg";
 import lightThemeCheckMarkIcon from "../../assets/checkmark-light.svg";
 import javaIcon from "../../assets/java.svg";
-import sprintBootIcon from "../../assets/springboot.svg";
-import angularIcon from "../../assets/angular.svg";
+import pythonIcon from "../../assets/python.svg";
+import typescriptIcon from "../../assets/typescript.svg";
+import sqlIcon from "../../assets/sql.svg";
 import htmlIcon from "../../assets/html.svg";
 import cssIcon from "../../assets/css.svg";
-import cassandraIcon from "../../assets/cassandra.svg";
-import postGreSqlIcon from "../../assets/postgresql.svg";
+import gcpIcon from "../../assets/gcp.svg";
+import dataflowIcon from "../../assets/dataflow.svg";
+import dagsIcon from "../../assets/dags.svg";
+import searchCommerceIcon from "../../assets/search-commerce.svg";
+import awsEcsIcon from "../../assets/aws-ecs.svg";
+import awsEc2Icon from "../../assets/aws-ec2.svg";
+import awsLambdaIcon from "../../assets/aws-lambda.svg";
+import ssmParameterStoreIcon from "../../assets/ssm-parameter-store.svg";
+import awsSecretsManagerIcon from "../../assets/aws-secrets-manager.svg";
+import awsSqsIcon from "../../assets/aws-sqs.svg";
+import kubernetesIcon from "../../assets/kubernetes.svg";
+import dockerIcon from "../../assets/docker.svg";
+import spinnakerIcon from "../../assets/spinnaker.svg";
+import kafkaIcon from "../../assets/kafka.svg";
+import redisIcon from "../../assets/redis.svg";
+import springWebfluxIcon from "../../assets/spring-webflux.svg";
+import projectReactorIcon from "../../assets/project-reactor.svg";
+import sprintBootIcon from "../../assets/springboot.svg";
+import angularIcon from "../../assets/angular.svg";
+import openApiIcon from "../../assets/openapi.svg";
+import microservicesIcon from "../../assets/microservices.svg";
 import awsIcon from "../../assets/aws.svg";
+import jenkinsIcon from "../../assets/jenkins.svg";
 import bitBucketIcon from "../../assets/bitbucket.svg";
 import lightGitHubSkillIcon from "../../assets/github-light.svg";
 import darkGitHubSkillIcon from "../../assets/github-dark.svg";
-import jenkinsIcon from "../../assets/jenkins.svg";
-import spinnakerIcon from "../../assets/spinnaker.svg";
 import jiraIcon from "../../assets/jira.svg";
 import confluenceIcon from "../../assets/confluence.svg";
 import SkillsList from "../../common/SkillsList";
@@ -31,7 +50,7 @@ const cardVariant = {
 };
 const chipContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
 };
 const chipVariant = {
   hidden: { opacity: 0, scale: 0.85 },
@@ -46,48 +65,65 @@ export const Skills = () => {
 
   const ORBIT_CORE = [
     { icon: javaIcon, name: "Java" },
+    { icon: pythonIcon, name: "Python" },
     { icon: sprintBootIcon, name: "Spring Boot" },
     { icon: angularIcon, name: "Angular" },
-    { icon: postGreSqlIcon, name: "PostgreSQL" },
-    { icon: cassandraIcon, name: "Cassandra" },
+    { icon: kubernetesIcon, name: "Kubernetes" },
+    { icon: dockerIcon, name: "Docker" },
+    { icon: gcpIcon, name: "GCP" },
     { icon: awsIcon, name: "AWS" },
-    { icon: gitHubSkillIcon, name: "GitHub" },
-    { icon: jenkinsIcon, name: "Jenkins" },
   ];
 
   const CATEGORIES = [
     {
-      path: "~/stack",
+      path: "~/dev",
       skills: [
         { icon: javaIcon, name: "Java" },
-        { icon: sprintBootIcon, name: "SpringBoot" },
-        { icon: checkMarkIcon, name: "JUnit/Mockito" },
-        { icon: angularIcon, name: "Angular" },
+        { icon: pythonIcon, name: "Python" },
+        { icon: typescriptIcon, name: "TypeScript" },
+        { icon: sqlIcon, name: "SQL" },
         { icon: htmlIcon, name: "HTML" },
-        { icon: cssIcon, name: "CSS/SCSS" },
-        { icon: checkMarkIcon, name: "Jasmine" },
-      ],
-    },
-    {
-      path: "~/data",
-      skills: [
-        { icon: cassandraIcon, name: "Cassandra" },
-        { icon: postGreSqlIcon, name: "PostgreSQL" },
+        { icon: cssIcon, name: "CSS" },
       ],
     },
     {
       path: "~/cloud",
       skills: [
-        { icon: awsIcon, name: "AWS" },
-        { icon: bitBucketIcon, name: "BitBucket" },
-        { icon: gitHubSkillIcon, name: "GitHub" },
+        { icon: gcpIcon, name: "GCP" },
+        { icon: dataflowIcon, name: "Dataflow" },
+        { icon: dagsIcon, name: "DAGs" },
+        { icon: searchCommerceIcon, name: "Search for Commerce", title: "Search for Commerce (AI Commerce Search)" },
+        { icon: awsEcsIcon, name: "AWS ECS" },
+        { icon: awsEc2Icon, name: "EC2" },
+        { icon: awsLambdaIcon, name: "Lambda" },
+        { icon: ssmParameterStoreIcon, name: "SSM Parameter Store" },
+        { icon: awsSecretsManagerIcon, name: "Secrets Manager" },
+        { icon: awsSqsIcon, name: "SQS" },
+        { icon: kubernetesIcon, name: "Kubernetes" },
+        { icon: dockerIcon, name: "Docker" },
+        { icon: spinnakerIcon, name: "Spinnaker" },
+        { icon: kafkaIcon, name: "Kafka" },
+        { icon: redisIcon, name: "Redis" },
       ],
     },
     {
-      path: "~/ops",
+      path: "~/frameworks",
+      skills: [
+        { icon: springWebfluxIcon, name: "Spring WebFlux" },
+        { icon: projectReactorIcon, name: "Project Reactor", title: "Project Reactor (Mono/Flux)" },
+        { icon: sprintBootIcon, name: "Spring Boot" },
+        { icon: angularIcon, name: "Angular" },
+        { icon: openApiIcon, name: "REST API Design" },
+        { icon: microservicesIcon, name: "Microservices" },
+        { icon: checkMarkIcon, name: "TDD" },
+      ],
+    },
+    {
+      path: "~/delivery",
       skills: [
         { icon: jenkinsIcon, name: "Jenkins" },
-        { icon: spinnakerIcon, name: "Spinnaker" },
+        { icon: gitHubSkillIcon, name: "GitHub" },
+        { icon: bitBucketIcon, name: "Bitbucket" },
         { icon: jiraIcon, name: "Jira" },
         { icon: confluenceIcon, name: "Confluence" },
       ],
@@ -120,7 +156,7 @@ export const Skills = () => {
 
   return (
     <section id="skills" className={styles.container}>
-      <h1 className="sectionTitle">Skills</h1>
+      <h1 className={`sectionTitle ${styles.heading}`}>Skills</h1>
 
       <div
         className={styles.scene}
@@ -153,10 +189,14 @@ export const Skills = () => {
         variants={cardContainer}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.15 }}
+        viewport={{ once: true, amount: 0.1 }}
       >
         {CATEGORIES.map(({ path, skills }) => (
-          <motion.div className={styles.categoryCard} variants={cardVariant} key={path}>
+          <motion.div
+            className={`${styles.categoryCard} ${skills.length > 9 ? styles.wide : ""}`}
+            variants={cardVariant}
+            key={path}
+          >
             <div className={styles.categoryHeader}>
               <span className={styles.dots} aria-hidden="true">
                 <span />
@@ -164,16 +204,17 @@ export const Skills = () => {
                 <span />
               </span>
               <span className={styles.path}>{path}</span>
+              <span className={styles.count}>{skills.length}</span>
             </div>
             <motion.div
               className={styles.chipGrid}
               variants={chipContainer}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
-              {skills.map(({ icon, name }) => (
-                <motion.div className={styles.chip} variants={chipVariant} key={name}>
+              {skills.map(({ icon, name, title }) => (
+                <motion.div className={styles.chip} variants={chipVariant} key={name} title={title || name}>
                   <SkillsList logoSrc={icon} skillName={name} />
                 </motion.div>
               ))}

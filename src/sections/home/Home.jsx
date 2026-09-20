@@ -103,7 +103,7 @@ export const Home = () => {
           </MagneticButton>
         </motion.div>
       </div>
-      <a href="#about" className={styles.scrollCue} aria-label="Scroll to About section" data-cursor-hover>
+      <a href="#experience" className={styles.scrollCue} aria-label="Scroll to Experience section" data-cursor-hover>
         <span />
       </a>
     </section>

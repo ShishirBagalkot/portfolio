@@ -4,7 +4,7 @@ import styles from "./SectionNav.module.css";
 
 const SECTIONS = [
   { id: "home", label: "Home", glyph: "01" },
-  { id: "about", label: "About", glyph: "//" },
+  { id: "experience", label: "Experience", glyph: ">_" },
   { id: "projects", label: "Projects", glyph: "<>" },
   { id: "skills", label: "Skills", glyph: "{}" },
 ];
