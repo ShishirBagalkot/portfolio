@@ -18,6 +18,29 @@ const PALETTE = {
   },
 };
 
+const CLOUD_PUFFS = [
+  [-0.9, 0.15, 0.55],
+  [-0.35, -0.18, 0.72],
+  [0.25, -0.08, 0.66],
+  [0.78, 0.18, 0.5],
+  [0.12, 0.32, 0.6],
+];
+
+function createClouds(width, height, count) {
+  const clouds = [];
+  for (let i = 0; i < count; i++) {
+    const depth = 0.4 + Math.random() * 0.6;
+    clouds.push({
+      x: Math.random() * width,
+      y: height * (0.06 + Math.random() * 0.26),
+      vx: (0.05 + Math.random() * 0.09) * depth,
+      scale: (26 + Math.random() * 24) * depth,
+      opacity: 0.14 + Math.random() * 0.16 * depth,
+    });
+  }
+  return clouds;
+}
+
 function createParticles(width, height, count) {
   const particles = [];
   for (let i = 0; i < count; i++) {
@@ -58,53 +81,13 @@ export const GlyphField = () => {
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let particles = [];
     let shootingStars = [];
+    let clouds = [];
+    let birds = [];
     let animationId;
     let time = 0;
     let running = true;
 
     const mouse = { x: -9999, y: -9999, active: false };
-
-    const drawMoon = () => {
-      const r = Math.max(30, Math.min(50, width * 0.035));
-      const mx = width - r * 2.2;
-      const my = r * 1.8;
-
-      ctx.save();
-      const glow = ctx.createRadialGradient(mx, my, 0, mx, my, r * 3.2);
-      glow.addColorStop(0, "rgba(226, 232, 255, 0.22)");
-      glow.addColorStop(1, "rgba(226, 232, 255, 0)");
-      ctx.fillStyle = glow;
-      ctx.beginPath();
-      ctx.arc(mx, my, r * 3.2, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(mx, my, r, 0, Math.PI * 2);
-      const body = ctx.createRadialGradient(
-        mx - r * 0.3,
-        my - r * 0.3,
-        r * 0.1,
-        mx,
-        my,
-        r
-      );
-      body.addColorStop(0, "rgba(245, 247, 255, 0.95)");
-      body.addColorStop(1, "rgba(203, 213, 245, 0.75)");
-      ctx.fillStyle = body;
-      ctx.fill();
-
-      ctx.globalCompositeOperation = "source-atop";
-      ctx.fillStyle = "rgba(160, 174, 210, 0.35)";
-      [[-0.35, -0.2, 0.22], [0.25, 0.15, 0.16], [-0.05, 0.4, 0.12]].forEach(
-        ([ox, oy, rr]) => {
-          ctx.beginPath();
-          ctx.arc(mx + ox * r, my + oy * r, rr * r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      );
-      ctx.globalCompositeOperation = "source-over";
-      ctx.restore();
-    };
 
     const maybeSpawnShootingStar = () => {
       if (shootingStars.length >= 2 && Math.random() > 0.002) return;
@@ -154,6 +137,75 @@ export const GlyphField = () => {
       }
     };
 
+    const drawClouds = () => {
+      for (const c of clouds) {
+        if (!reduceMotion) {
+          c.x += c.vx;
+          if (c.x - c.scale * 2 > width) c.x = -c.scale * 2;
+        }
+
+        ctx.save();
+        ctx.translate(c.x, c.y);
+        ctx.filter = "blur(7px)";
+        ctx.fillStyle = `rgba(120, 140, 185, ${c.opacity})`;
+        ctx.beginPath();
+        for (const [dx, dy, r] of CLOUD_PUFFS) {
+          ctx.moveTo(dx * c.scale + r * c.scale, dy * c.scale);
+          ctx.arc(dx * c.scale, dy * c.scale, r * c.scale, 0, Math.PI * 2);
+        }
+        ctx.fill();
+        ctx.restore();
+      }
+    };
+
+    const maybeSpawnBird = () => {
+      if (birds.length >= 1 && Math.random() > 0.0015) return;
+      if (Math.random() > 0.003) return;
+      const fromLeft = Math.random() > 0.5;
+      const speed = 2.1 + Math.random() * 1.2;
+      birds.push({
+        x: fromLeft ? -30 : width + 30,
+        y: height * (0.08 + Math.random() * 0.22),
+        vx: fromLeft ? speed : -speed,
+        vy: (Math.random() - 0.5) * 0.3,
+        wingPhase: Math.random() * Math.PI * 2,
+        life: 0,
+        maxLife: 260 + Math.random() * 140,
+        scale: 0.7 + Math.random() * 0.6,
+      });
+    };
+
+    const drawBirds = () => {
+      birds = birds.filter((b) => b.life < b.maxLife && b.x > -60 && b.x < width + 60);
+      for (const b of birds) {
+        if (!reduceMotion) {
+          b.x += b.vx;
+          b.y += b.vy;
+          b.wingPhase += 0.35;
+        }
+        b.life += 1;
+
+        const fadeIn = Math.min(1, b.life / 20);
+        const fadeOut = Math.min(1, (b.maxLife - b.life) / 20);
+        const alpha = Math.min(fadeIn, fadeOut) * 0.5;
+        const flap = Math.sin(b.wingPhase) * 5 * b.scale;
+        const span = 9 * b.scale;
+
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        if (b.vx < 0) ctx.scale(-1, 1);
+        ctx.strokeStyle = `rgba(60, 70, 100, ${alpha})`;
+        ctx.lineWidth = 1.6;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-span, -flap);
+        ctx.quadraticCurveTo(-span * 0.4, flap * 0.6, 0, 0);
+        ctx.quadraticCurveTo(span * 0.4, flap * 0.6, span, -flap);
+        ctx.stroke();
+        ctx.restore();
+      }
+    };
+
     const density = window.innerWidth < 700 ? 26000 : 15000;
 
     const resize = () => {
@@ -167,6 +219,8 @@ export const GlyphField = () => {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const count = Math.max(28, Math.min(130, Math.floor((width * height) / density)));
       particles = createParticles(width, height, count);
+      const cloudCount = width < 700 ? 2 : 4;
+      clouds = createClouds(width, height, cloudCount);
     };
 
     const onPointerMove = (e) => {
@@ -186,9 +240,12 @@ export const GlyphField = () => {
       time += 1;
 
       if (isDark) {
-        drawMoon();
         if (!reduceMotion) maybeSpawnShootingStar();
         drawShootingStars();
+      } else {
+        drawClouds();
+        if (!reduceMotion) maybeSpawnBird();
+        drawBirds();
       }
 
       const linkDist = width < 700 ? 85 : 120;

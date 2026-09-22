@@ -1,8 +1,7 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import styles from "../home/HomeStyles.module.css";
-import profilePic from "../../assets/DP.jpg";
-import lightThemeIcon from "../../assets/sun.svg";
-import darkThemeIcon from "../../assets/moon.svg";
+import profilePicFallback from "../../assets/DP.jpg";
 import lightTwitterIcon from "../../assets/twitter-light.svg";
 import darkTwitterIcon from "../../assets/twitter-dark.svg";
 import lightGitHubIcon from "../../assets/github-light.svg";
@@ -21,13 +20,18 @@ const ROLES = [
   "Builds reliable systems",
 ];
 
+// Sourced live from Drive so a re-upload there shows up here without a redeploy.
+// Keep the same Drive file (same ID) and just replace its content to update the photo.
+const PROFILE_PHOTO_DRIVE_ID = "1IOpJOh8HYUGtcsc1UjaYHMkib_ge8irE";
+const PROFILE_PHOTO_URL = `https://lh3.googleusercontent.com/d/${PROFILE_PHOTO_DRIVE_ID}=w1000`;
+
 export const Home = () => {
-  const { theme, toggleTheme } = useTheme();
-  const themeIcon = theme === "light" ? lightThemeIcon : darkThemeIcon;
+  const { theme } = useTheme();
   const twitterIcon = theme === "light" ? lightTwitterIcon : darkTwitterIcon;
   const gitHubIcon = theme === "light" ? lightGitHubIcon : darkGitHubIcon;
   const linkedInIcon = theme === "light" ? lightLinkedInIcon : darkLinkedInIcon;
   const typed = useTypewriter(ROLES);
+  const [profilePhoto, setProfilePhoto] = useState(PROFILE_PHOTO_URL);
 
   return (
     <section id="home" className={styles.container}>
@@ -39,15 +43,14 @@ export const Home = () => {
       >
         <div className={styles.radar} aria-hidden="true" />
         <TiltCard className={styles.tiltWrap} maxTilt={10} scale={1.03}>
-          <img className={styles.home} src={profilePic} alt="Profile Pic" />
+          <img className={styles.homeBlur} src={profilePhoto} alt="" aria-hidden="true" />
+          <img
+            className={styles.home}
+            src={profilePhoto}
+            alt="Profile Pic"
+            onError={() => setProfilePhoto(profilePicFallback)}
+          />
         </TiltCard>
-        <img
-          className={`${styles.colorMode} hover`}
-          src={themeIcon}
-          alt="Toggle theme"
-          onClick={toggleTheme}
-          data-cursor-hover
-        />
       </motion.div>
       <div className={styles.info}>
         <motion.h1
