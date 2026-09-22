@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import TerminalTabs from "../../common/TerminalTabs";
 import styles from "./SkillsStyles.module.css";
 import darkThemeCheckMarkIcon from "../../assets/checkmark-dark.svg";
 import lightThemeCheckMarkIcon from "../../assets/checkmark-light.svg";
@@ -39,11 +40,6 @@ import confluenceIcon from "../../assets/confluence.svg";
 import SkillsList from "../../common/SkillsList";
 import { useTheme } from "../../common/ThemeContext";
 
-const panelVariants = {
-  hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.15 } },
-};
 const chipContainer = {
   hidden: {},
   show: { transition: { staggerChildren: 0.03 } },
@@ -152,89 +148,60 @@ export const Skills = () => {
     <section id="skills" className={styles.container}>
       <h1 className={`sectionTitle ${styles.heading}`}>Skills</h1>
 
-      <div className={styles.terminal}>
-        <div className={styles.titleBar}>
-          <span className={styles.dots} aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-          <div className={styles.tabs} role="tablist" aria-label="Skill categories">
-            {CATEGORIES.map(({ path }) => (
-              <button
-                key={path}
-                type="button"
-                role="tab"
-                aria-selected={!isSearching && activeTab === path}
-                className={`${styles.tab} ${!isSearching && activeTab === path ? styles.tabActive : ""}`}
-                onClick={() => {
-                  setActiveTab(path);
-                  setQuery("");
-                }}
-                data-cursor-hover
-              >
-                {path}
-              </button>
-            ))}
+      <TerminalTabs
+        tabs={CATEGORIES.map(({ path }) => ({ key: path, label: path }))}
+        activeTab={isSearching ? null : activeTab}
+        onTabChange={(key) => {
+          setActiveTab(key);
+          setQuery("");
+        }}
+        panelKey={panelKey}
+        ariaLabel="Skill categories"
+        headerExtra={
+          <div className={styles.searchRow}>
+            <span className={styles.prompt} aria-hidden="true">
+              $ grep -i
+            </span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="search skills…"
+              aria-label="Search skills"
+              className={styles.searchInput}
+            />
+            <span className={styles.hint} aria-hidden="true">
+              {query ? `${visibleSkills.length} match${visibleSkills.length === 1 ? "" : "es"}` : "press /"}
+            </span>
           </div>
-        </div>
-
-        <div className={styles.searchRow}>
-          <span className={styles.prompt} aria-hidden="true">
-            $ grep -i
-          </span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="search skills…"
-            aria-label="Search skills"
-            className={styles.searchInput}
-          />
-          <span className={styles.hint} aria-hidden="true">
-            {query ? `${visibleSkills.length} match${visibleSkills.length === 1 ? "" : "es"}` : "press /"}
-          </span>
-        </div>
-
-        <div className={styles.panelViewport}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={panelKey}
-              variants={panelVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-              role="tabpanel"
-            >
-              {visibleSkills.length === 0 ? (
-                <p className={styles.empty}>
-                  grep: no matches for &ldquo;{query}&rdquo;
-                </p>
-              ) : (
-                <motion.div
-                  className={styles.chipGrid}
-                  variants={chipContainer}
-                  initial="hidden"
-                  animate="show"
-                >
-                  {visibleSkills.map(({ icon, name, title, category }) => (
-                    <motion.div
-                      className={styles.chip}
-                      variants={chipVariant}
-                      key={`${category || activeTab}-${name}`}
-                      title={title || name}
-                    >
-                      <SkillsList logoSrc={icon} skillName={name} />
-                      {isSearching && <span className={styles.chipTag}>{category}</span>}
-                    </motion.div>
-                  ))}
-                </motion.div>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
+        }
+      >
+        {visibleSkills.length === 0 ? (
+          <p className={styles.empty}>
+            grep: no matches for &ldquo;{query}&rdquo;
+          </p>
+        ) : (
+          <motion.div
+            className={styles.chipGrid}
+            variants={chipContainer}
+            initial="hidden"
+            animate="show"
+          >
+            {visibleSkills.map(({ icon, name, title, category }) => (
+              <motion.div
+                className={styles.chip}
+                variants={chipVariant}
+                key={`${category || activeTab}-${name}`}
+                title={title || name}
+              >
+                <SkillsList logoSrc={icon} skillName={name} />
+                {isSearching && <span className={styles.chipTag}>{category}</span>}
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </TerminalTabs>
     </section>
   );
 }
