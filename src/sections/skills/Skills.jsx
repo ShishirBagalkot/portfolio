@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import styles from "./SkillsStyles.module.css";
 import darkThemeCheckMarkIcon from "../../assets/checkmark-dark.svg";
 import lightThemeCheckMarkIcon from "../../assets/checkmark-light.svg";
@@ -30,7 +30,6 @@ import sprintBootIcon from "../../assets/springboot.svg";
 import angularIcon from "../../assets/angular.svg";
 import openApiIcon from "../../assets/openapi.svg";
 import microservicesIcon from "../../assets/microservices.svg";
-import awsIcon from "../../assets/aws.svg";
 import jenkinsIcon from "../../assets/jenkins.svg";
 import bitBucketIcon from "../../assets/bitbucket.svg";
 import lightGitHubSkillIcon from "../../assets/github-light.svg";
@@ -40,39 +39,24 @@ import confluenceIcon from "../../assets/confluence.svg";
 import SkillsList from "../../common/SkillsList";
 import { useTheme } from "../../common/ThemeContext";
 
-const cardContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-const cardVariant = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+const panelVariants = {
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.15 } },
 };
 const chipContainer = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.04, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.03 } },
 };
 const chipVariant = {
   hidden: { opacity: 0, scale: 0.85 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.25 } },
 };
 
 export const Skills = () => {
   const { theme } = useTheme();
   const checkMarkIcon = theme === "light" ? lightThemeCheckMarkIcon : darkThemeCheckMarkIcon;
   const gitHubSkillIcon = theme === "light" ? lightGitHubSkillIcon : darkGitHubSkillIcon;
-  const reduceMotion = useReducedMotion();
-
-  const ORBIT_CORE = [
-    { icon: javaIcon, name: "Java" },
-    { icon: pythonIcon, name: "Python" },
-    { icon: sprintBootIcon, name: "Spring Boot" },
-    { icon: angularIcon, name: "Angular" },
-    { icon: kubernetesIcon, name: "Kubernetes" },
-    { icon: dockerIcon, name: "Docker" },
-    { icon: gcpIcon, name: "GCP" },
-    { icon: awsIcon, name: "AWS" },
-  ];
 
   const CATEGORIES = [
     {
@@ -130,98 +114,127 @@ export const Skills = () => {
     },
   ];
 
-  const sceneRef = useRef(null);
-  const rx = useMotionValue(0);
-  const ry = useMotionValue(0);
-  const rotateX = useSpring(rx, { damping: 20, stiffness: 120 });
-  const rotateY = useSpring(ry, { damping: 20, stiffness: 120 });
+  const [activeTab, setActiveTab] = useState(CATEGORIES[0].path);
+  const [query, setQuery] = useState("");
+  const inputRef = useRef(null);
 
-  const angleStep = 360 / ORBIT_CORE.length;
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key !== "/") return;
+      const tag = document.activeElement?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      e.preventDefault();
+      inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputRef.current?.focus();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
-  const handleSceneMove = (e) => {
-    if (reduceMotion) return;
-    const el = sceneRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    ry.set(px * 24);
-    rx.set(-py * 24);
-  };
+  const normalizedQuery = query.trim().toLowerCase();
+  const isSearching = normalizedQuery.length > 0;
 
-  const handleSceneLeave = () => {
-    rx.set(0);
-    ry.set(0);
-  };
+  const visibleSkills = useMemo(() => {
+    if (isSearching) {
+      return CATEGORIES.flatMap(({ path, skills }) =>
+        skills
+          .filter(({ name }) => name.toLowerCase().includes(normalizedQuery))
+          .map((skill) => ({ ...skill, category: path }))
+      );
+    }
+    return CATEGORIES.find(({ path }) => path === activeTab)?.skills ?? [];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, isSearching, normalizedQuery, theme]);
+
+  const panelKey = isSearching ? `search:${normalizedQuery}` : activeTab;
 
   return (
     <section id="skills" className={styles.container}>
       <h1 className={`sectionTitle ${styles.heading}`}>Skills</h1>
 
-      <div
-        className={styles.scene}
-        ref={sceneRef}
-        onPointerMove={handleSceneMove}
-        onPointerLeave={handleSceneLeave}
-      >
-        <motion.div className={styles.orbitWrapper} style={{ rotateX, rotateY }}>
-          <div className={`${styles.orbit} ${reduceMotion ? styles.orbitStatic : ""}`}>
-            {ORBIT_CORE.map(({ icon, name }, i) => (
-              <div
-                key={name}
-                className={styles.orbitItem}
-                style={{
-                  transform: `translate(-50%, -50%) rotateY(${i * angleStep}deg) translateZ(var(--orbit-radius))`,
+      <div className={styles.terminal}>
+        <div className={styles.titleBar}>
+          <span className={styles.dots} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <div className={styles.tabs} role="tablist" aria-label="Skill categories">
+            {CATEGORIES.map(({ path }) => (
+              <button
+                key={path}
+                type="button"
+                role="tab"
+                aria-selected={!isSearching && activeTab === path}
+                className={`${styles.tab} ${!isSearching && activeTab === path ? styles.tabActive : ""}`}
+                onClick={() => {
+                  setActiveTab(path);
+                  setQuery("");
                 }}
+                data-cursor-hover
               >
-                <img src={icon} alt={name} title={name} />
-              </div>
+                {path}
+              </button>
             ))}
           </div>
-          <div className={styles.core}>
-            <span>&lt;/&gt;</span>
-          </div>
-        </motion.div>
-      </div>
+        </div>
 
-      <motion.div
-        className={styles.categoryGrid}
-        variants={cardContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {CATEGORIES.map(({ path, skills }) => (
-          <motion.div
-            className={`${styles.categoryCard} ${skills.length > 9 ? styles.wide : ""}`}
-            variants={cardVariant}
-            key={path}
-          >
-            <div className={styles.categoryHeader}>
-              <span className={styles.dots} aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </span>
-              <span className={styles.path}>{path}</span>
-              <span className={styles.count}>{skills.length}</span>
-            </div>
+        <div className={styles.searchRow}>
+          <span className={styles.prompt} aria-hidden="true">
+            $ grep -i
+          </span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="search skills…"
+            aria-label="Search skills"
+            className={styles.searchInput}
+          />
+          <span className={styles.hint} aria-hidden="true">
+            {query ? `${visibleSkills.length} match${visibleSkills.length === 1 ? "" : "es"}` : "press /"}
+          </span>
+        </div>
+
+        <div className={styles.panelViewport}>
+          <AnimatePresence mode="wait">
             <motion.div
-              className={styles.chipGrid}
-              variants={chipContainer}
+              key={panelKey}
+              variants={panelVariants}
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
+              animate="show"
+              exit="exit"
+              role="tabpanel"
             >
-              {skills.map(({ icon, name, title }) => (
-                <motion.div className={styles.chip} variants={chipVariant} key={name} title={title || name}>
-                  <SkillsList logoSrc={icon} skillName={name} />
+              {visibleSkills.length === 0 ? (
+                <p className={styles.empty}>
+                  grep: no matches for &ldquo;{query}&rdquo;
+                </p>
+              ) : (
+                <motion.div
+                  className={styles.chipGrid}
+                  variants={chipContainer}
+                  initial="hidden"
+                  animate="show"
+                >
+                  {visibleSkills.map(({ icon, name, title, category }) => (
+                    <motion.div
+                      className={styles.chip}
+                      variants={chipVariant}
+                      key={`${category || activeTab}-${name}`}
+                      title={title || name}
+                    >
+                      <SkillsList logoSrc={icon} skillName={name} />
+                      {isSearching && <span className={styles.chipTag}>{category}</span>}
+                    </motion.div>
+                  ))}
                 </motion.div>
-              ))}
+              )}
             </motion.div>
-          </motion.div>
-        ))}
-      </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
     </section>
   );
 }
